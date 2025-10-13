@@ -1,0 +1,120 @@
+/* ---------- NAVBAR MAIN ---------- */
+.navbar {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem 2rem;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(8px);
+  color: #fff;
+  z-index: 1000;
+  box-sizing: border-box;
+  transition: all 0.3s ease-in-out;
+}
+
+/* ---------- LOGO SECTION ---------- */
+.navLogo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-decoration: none;
+}
+
+.navLogoImg {
+  width: 38px;
+  height: 38px;
+}
+
+.navLogoText {
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  background: linear-gradient(to right, #ffcc00, #ff8800);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ---------- LOGIN BUTTON ---------- */
+.loginBtn {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  background: linear-gradient(90deg, #ffcc00, #ff8800);
+  color: #222;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.3s ease-in-out;
+}
+
+.loginBtn:hover {
+  background: linear-gradient(90deg, #ffd633, #ffa533);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(255, 204, 0, 0.3);
+}
+
+/* ---------- RESPONSIVENESS ---------- */
+
+/* Tablets */
+@media (max-width: 1024px) {
+  .navLogoText {
+    font-size: 1.4rem;
+  }
+
+  .navLogoImg {
+    width: 32px;
+    height: 32px;
+  }
+
+  .loginBtn {
+    font-size: 0.95rem;
+    padding: 0.5rem 1rem;
+  }
+}
+
+/* Mobiles */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0.6rem 1rem;
+  }
+
+  .navLogoText {
+    font-size: 1.2rem;
+  }
+
+  .navLogoImg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .loginBtn {
+    font-size: 0.9rem;
+    padding: 0.4rem 0.8rem;
+  }
+}
+
+/* Very Small Phones */
+@media (max-width: 480px) {
+  .navbar {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .navLogo {
+    gap: 0.4rem;
+  }
+
+  .navLogoText {
+    font-size: 1rem;
+  }
+
+  .loginBtn {
+    font-size: 0.85rem;
+    padding: 0.35rem 0.7rem;
+  }
+}
