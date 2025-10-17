@@ -1,163 +1,201 @@
-.registerCard {
-  background: rgba(255, 255, 255, 0.15);
-  color: white;
-  padding: 2.5rem;
-  border-radius: 16px;
-  width: 100%;
-  max-width: 420px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
-  backdrop-filter: blur(12px);
-  transition: all 0.3s ease-in-out;
-  margin: auto;
-}
 
-.registerCard:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.3);
-}
-
-.heading {
-  text-align: center;
-  margin-bottom: 1.8rem;
-  font-size: clamp(1.4rem, 2vw, 1.8rem);
-  font-weight: 700;
-  background: linear-gradient(to right, #830b07, #b4100a);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.formGroup {
-  margin-bottom: 1.2rem;
+.auth {
+  position: relative;
   display: flex;
-  flex-direction: column;
-  width: 100%;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(2.25rem, 5vw, 4rem);
+  background: hsl(var(--background));
+  background-color: rgb(243, 243, 243);
 }
 
-.label {
-  margin-bottom: 0.5rem;
+.topLoginButton {
+  position: absolute;
+  top: 2%;
+  right: 3%;
+  padding: 0.6rem 1.9rem;
+  border-radius: 10px;
+  border: none;
+  background: #1010e3;
+  background: linear-gradient(132deg,rgba(16, 16, 227, 1) 0%, rgba(126, 126, 196, 1) 35%, rgba(5, 189, 240, 1) 100%);
+  color: hsl(var(--metro-ink));
   font-weight: 600;
+  font-size: 0.95rem;
+  box-shadow: 0 12px 24px -18px rgba(17, 24, 39, 0.45);
+  cursor: pointer;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.topLoginButton:hover,
+.topLoginButton:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: 0 16px 32px -18px rgba(17, 24, 39, 0.4);
+  outline: none;
+}
+
+.authCard {
+  width: min(550px, 100%);
+  padding: clamp(2rem, 4vw, 3rem);
+  border-radius: 26px;
+  background: #ffffff;
+  box-shadow: 0 28px 60px -40px rgba(15, 23, 42, 0.4);
+  display: grid;
+  gap: 1.75rem;
+}
+
+.authHeader {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.authTitle {
+  font-size: clamp(1.9rem, 3vw, 2.25rem);
+  font-weight: 700;
+  color: hsl(var(--metro-ink));
+}
+
+.authSubtitle {
+  font-size: 0.95rem;
+  color: rgba(71, 85, 105, 0.85);
+  font-weight: 500;
+}
+
+.form {
+  display: grid;
+  gap: 1.2rem;
+}
+
+.field {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.fieldLabel {
   font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+  color: rgba(71, 85, 105, 0.88);
+}
+
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.55);
+  background: #f9fafb;
+  transition: border-color 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
+}
+
+.inputWrapper:focus-within {
+  border-color: hsl(var(--metro-sky));
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.22);
+  background: #ffffff;
+}
+
+.inputIcon {
+  width: 1rem;
+  height: 1rem;
+  margin-left: 0.95rem;
+  color: rgba(71, 85, 105, 0.65);
+  flex-shrink: 0;
 }
 
 .input {
-  padding: 0.85rem;
-  border-radius: 10px;
-  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  width: 100%;
+  border: none;
+  background: transparent;
+  padding: 0.85rem 1rem;
   font-size: 1rem;
-  transition: all 0.3s ease-in-out;
-  outline: none;
-  background: rgba(255, 255, 255, 0.15);
-  color: white;
+  font-weight: 500;
+  color: hsl(var(--metro-ink));
 }
 
 .input::placeholder {
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(71, 85, 105, 0.6);
 }
 
 .input:focus {
-  border-color: #007bff;
-  box-shadow: 0 0 10px rgba(0, 123, 255, 0.3);
+  outline: none;
 }
 
-.registerBtn {
+.submitButton {
+  margin-top: 0.5rem;
   width: 100%;
-  padding: 1rem;
   border: none;
-  background: #ffcc00;
-  color: white;
-  font-weight: bold;
-  border-radius: 10px;
-  cursor: pointer;
+  border-radius: 14px;
+  padding: 0.95rem;
   font-size: 1rem;
-  transition: all 0.3s ease-in-out;
+  font-weight: 600;
+  background: var(--submit-gradient, linear-gradient(120deg, #fbbf24 0%, #f59e0b 100%));
+  color: #1f2937;
+  cursor: pointer;
+  box-shadow: 0 18px 35px -20px rgba(251, 191, 36, 0.65);
+  transition: transform 160ms ease, box-shadow 160ms ease;
 }
 
-.registerBtn:hover {
-  background: #ffd633;
-  transform: translateY(-2px);
+.submitButton:hover,
+.submitButton:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: 0 22px 38px -18px rgba(245, 158, 11, 0.6);
+  outline: none;
 }
 
-.loginText {
+.loginPrompt {
   text-align: center;
-  margin-top: 1.5rem;
   font-size: 0.95rem;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(71, 85, 105, 0.75);
 }
 
 .loginLink {
-  color: #00b4ff;
+  margin-left: 0.35rem;
+  border: none;
+  background: none;
+  padding: 0;
+  font: inherit;
   font-weight: 600;
+  color: hsl(var(--metro-sky));
   cursor: pointer;
-  transition: color 0.3s;
+  text-decoration: none;
 }
 
-.loginLink:hover {
-  color: #66cfff;
+.loginLink:hover,
+.loginLink:focus-visible {
+  color: #2563eb;
   text-decoration: underline;
+  outline: none;
 }
 
-/* ✅ Tablet */
 @media (max-width: 1024px) {
-  .registerCard {
-    max-width: 360px;
-    padding: 2rem;
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .hero {
+    border-radius: 28px 28px 0 0;
+  }
+
+  .topLoginButton {
+    position: static;
+    align-self: flex-end;
+    margin-bottom: 1.5rem;
+  }
+
+  .auth {
+    padding-block: clamp(2rem, 5vw, 3rem);
+  }
+
+  .authCard {
+    box-shadow: 0 18px 45px -30px rgba(15, 23, 42, 0.4);
   }
 }
 
-/* ✅ Large Mobile */
-@media (max-width: 768px) {
-  .registerCard {
-    max-width: 95%;
-    padding: 1.8rem;
+@media (max-width: 640px) {
+
+  .auth {
+    padding: clamp(2rem, 8vw, 3rem);
   }
 
-  .registerBtn {
-    padding: 0.9rem;
-    font-size: 0.95rem;
-  }
-
-  .input {
-    font-size: 0.95rem;
-    padding: 0.75rem;
-  }
-}
-
-/* ✅ Small Mobile */
-@media (max-width: 480px) {
-  .registerCard {
-    max-width: 90%;
-    padding: 1.5rem;
-    border-radius: 12px;
-  }
-
-  .heading {
-    font-size: 1.3rem;
-  }
-
-  .input {
-    font-size: 0.9rem;
-    padding: 0.7rem;
-  }
-
-  .registerBtn {
-    padding: 0.8rem;
-    font-size: 0.9rem;
-  }
-
-  .loginText {
-    font-size: 0.85rem;
-  }
-}
-
-/* ✅ Ultra-Wide Screens */
-@media (min-width: 1600px) {
-  .registerCard {
-    max-width: 480px;
-    padding: 3rem;
-  }
-
-  .heading {
-    font-size: 2rem;
+  .authCard {
+    padding: clamp(1.8rem, 6vw, 2.4rem);
   }
 }

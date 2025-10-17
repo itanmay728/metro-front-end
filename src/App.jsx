@@ -1,6 +1,6 @@
 import './App.css'
 import { createBrowserRouter, RouterProvider, Routes } from "react-router-dom"
-import Layout from './Layout'
+// import Layout from './Layout'
 import Home from './Pages/Home/Home'
 
 function App() {
@@ -8,13 +8,8 @@ function App() {
   let router = createBrowserRouter([
     {
       path : "/",
-      element : <Layout/>,
-      children : [
-        {
-          path : "/",
-          element : <Home />,
-        },
-      ]
+      element : <Home />,
+      children : []
     }
   ])
 
