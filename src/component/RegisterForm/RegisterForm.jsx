@@ -2,19 +2,15 @@ import React, { useState, useCallback } from "react";
 import styles from "./RegisterForm.module.css";
 import { useDispatch } from "react-redux";
 import { showLoginForm } from "../../contextAPI/authUISlice";
-import {
-  Fingerprint,
-  Home,
-  Lock,
-  Mail,
-  Phone,
-  UserRound,
-} from "lucide-react";
+import { Fingerprint, Home, Lock, Mail, Phone, UserRound } from "lucide-react";
+import axios from "axios";
+
+const API_Base  = import.meta.env.VITE_BACKEND_URL;
 
 const createAccountFields = [
   {
     label: "Full Name",
-    name: "fullName",
+    name: "full_name",
     type: "text",
     placeholder: "John Doe",
     icon: UserRound,
@@ -22,7 +18,7 @@ const createAccountFields = [
   },
   {
     label: "Email ID",
-    name: "email",
+    name: "email_id",
     type: "email",
     placeholder: "you@example.com",
     icon: Mail,
@@ -30,7 +26,7 @@ const createAccountFields = [
   },
   {
     label: "Mobile Number",
-    name: "phone",
+    name: "phone_number",
     type: "tel",
     placeholder: "+91 1234567890",
     icon: Phone,
@@ -48,7 +44,7 @@ const createAccountFields = [
   },
   {
     label: "Aadhar Number",
-    name: "aadhar",
+    name: "aadhar_number",
     type: "text",
     placeholder: "XXXX XXXX XXXX",
     icon: Fingerprint,
@@ -71,11 +67,11 @@ function RegisterForm() {
 
   // State for controlled form
   const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    phone: "",
+    full_name: "",
+    email_id: "",
+    phone_number: "",
     address: "",
-    aadhar: "",
+    aadhar_number: "",
     password: "",
   });
 
@@ -90,10 +86,32 @@ function RegisterForm() {
 
   // Handle form submission
   const handleSubmit = useCallback(
-    (event) => {
+    async (event) => {
       event.preventDefault();
       console.log("Form submitted:", formData);
       // You can dispatch a registration action here instead of console.log
+
+      try {
+        const response = await axios.post(
+          `${API_Base}/addcustomer`,
+          formData,
+          { headers: { "Content-Type": "application/json" } }
+        );
+        console.log("✅ Response from backend:", response.data);
+        alert("Account created successfully!");
+      } catch (error) {
+        console.error("❌ Error during registration:", error);
+        alert("Failed to create account. Please try again");
+      }
+
+      setFormData({
+        full_name: "",
+        email_id: "",
+        phone_number: "",
+        address: "",
+        aadhar_number: "",
+        password: "",
+      });
     },
     [formData]
   );
@@ -112,7 +130,11 @@ function RegisterForm() {
           {createAccountFields.map((field) => {
             const Icon = field.icon;
             return (
-              <label key={field.name} className={styles.field} htmlFor={field.name}>
+              <label
+                key={field.name}
+                className={styles.field}
+                htmlFor={field.name}
+              >
                 <span className={styles.fieldLabel}>{field.label}</span>
                 <div className={styles.inputWrapper}>
                   <Icon className={styles.inputIcon} aria-hidden />
