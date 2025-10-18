@@ -19,7 +19,13 @@
   flex-direction: column;
   justify-content: space-between;
 }
-
+.map{
+  margin-top: 2rem;
+  img{
+    width: -moz-available;
+  }
+  
+}
 .heroOverlay {
   position: absolute;
   inset: 0;
