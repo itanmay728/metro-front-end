@@ -1,3 +1,11 @@
+:root {
+  --primary: #3b82f6;
+  --secondary: #f97316;
+  --bg-light: #ffffff;
+  --text: #1f2937;
+  --text-muted: #64748b;
+}
+
 * {
   margin: 0px;
   padding: 0px;

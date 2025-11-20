@@ -3,7 +3,7 @@ import styles from "./LoginForm.module.css";
 import { showRegisterForm } from "../../contextAPI/authUISlice";
 import { useDispatch } from "react-redux";
 import React, { useState, useCallback } from "react";
-import { Fingerprint, Home, Lock, Mail, Phone, UserRound } from "lucide-react";
+import { Lock, Mail,} from "lucide-react";
 
 
 
