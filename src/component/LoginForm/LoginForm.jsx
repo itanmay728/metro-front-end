@@ -1,33 +1,35 @@
-// import React from "react";
 import styles from "./LoginForm.module.css";
-import { showRegisterForm } from "../../contextAPI/authUISlice";
+import { useState, useCallback } from "react";
+import { Lock, Mail, User, BadgeCheck } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import authFunction from "../../api/authApi";
 import { useDispatch } from "react-redux";
-import React, { useState, useCallback } from "react";
-import { Lock, Mail,} from "lucide-react";
+import { loginSuccess } from "../../contextAPI/slices/authSlice";
+import { setEmployeeProfile } from "../../contextAPI/slices/EmployeeDetailsSlice";
+import { setCustomerProfile } from "../../contextAPI/slices/CustomerDetailsSlice";
 
-
-
-const createAccountFields = [
+const fields = [
   {
     label: "Email ID",
-    name: "email_id",
+    name: "email",
     type: "email",
     placeholder: "you@example.com",
     icon: Mail,
     autoComplete: "email",
   },
-   {
+  {
     label: "Password",
     name: "password",
     type: "password",
-    placeholder: "••••••••",
+    placeholder: "•••••••••",
     icon: Lock,
     autoComplete: "password",
   },
 ];
 
-
-function LoginForm() {
+export default function LoginForm() {
+  const [activeRole, setActiveRole] = useState("user"); // "user" | "employee"
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
@@ -35,90 +37,144 @@ function LoginForm() {
     password: "",
   });
 
-   // Generic input change handler
-    const handleChange = useCallback((event) => {
-      const { name, value } = event.target;
-      setFormData((prev) => ({
-        ...prev,
-        [name]: value,
-      }));
-    }, []);
+  const handleChange = useCallback((e) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  }, []);
 
-     // Handle form submission
   const handleSubmit = useCallback(
-    async (event) => {
-      event.preventDefault();
-      console.log("Form submitted:", formData);
-      // You can dispatch a registration action here instead of console.log
-      setFormData({
-        email_id: "",
-        password: "",
-      });
-    },
-    [formData]
-  );
+    async (e) => {
+      e.preventDefault();
 
-    
+      const data = await authFunction(formData);
+      console.log(data);
+
+      
+      const roles = data.roles; // ["ROLE_ADMIN", "ROLE_CUSTOMER", etc.]
+
+      // ROLE VALIDATION BASED ON ACTIVE TAB (IMPORTANT FIX)
+      if (activeRole === "user") {
+        if (!roles.includes("ROLE_CUSTOMER")) {
+          alert("You are not authorized to login as Customer.");
+          return;
+        }
+      }
+
+      if (activeRole === "employee") {
+        const employeeRoles = [
+          "ROLE_ADMIN",
+          "ROLE_MANAGER",
+          "ROLE_COUNTER_EXECUTIVE",
+        ];
+
+        const isEmployee = roles.some((r) => employeeRoles.includes(r));
+
+        if (!isEmployee) {
+          alert("You are not authorized to login as Employee.");
+          return;
+        }
+      }
+
+      dispatch(
+        loginSuccess(data)
+      );
+
+      dispatch(setEmployeeProfile(data));
+      dispatch(setCustomerProfile(data));
+
+      // REDIRECT BASED ON ROLES
+      if (roles.includes("ROLE_CUSTOMER")) {
+        navigate("/customer/dashboard");
+      } else {
+        navigate("/employee/dashboard");
+      }
+
+      setFormData({ email: "", password: "" });
+    },
+    [formData, activeRole]
+  );
 
   return (
-   <section className={styles.auth}>
-         <div className={styles.authCard} aria-labelledby="create-account-heading">
-           <header className={styles.authHeader}>
-             <h2 id="create-account-heading" className={styles.authTitle}>
-               LOG IN
-             </h2>
-             <p className={styles.authSubtitle}>Let&apos;s get you started!</p>
-           </header>
-   
-           <form className={styles.form} onSubmit={handleSubmit}>
-             {createAccountFields.map((field) => {
-               const Icon = field.icon;
-               return (
-                 <label
-                   key={field.name}
-                   className={styles.field}
-                   htmlFor={field.name}
-                 >
-                   <span className={styles.fieldLabel}>{field.label}</span>
-                   <div className={styles.inputWrapper}>
-                     <Icon className={styles.inputIcon} aria-hidden />
-                     <input
-                       id={field.name}
-                       name={field.name}
-                       type={field.type}
-                       placeholder={field.placeholder}
-                       autoComplete={field.autoComplete}
-                       inputMode={field.inputMode}
-                       pattern={field.pattern}
-                       maxLength={field.maxLength}
-                       required
-                       className={styles.input}
-                       value={formData[field.name] || ""}
-                       onChange={handleChange}
-                     />
-                   </div>
-                 </label>
-               );
-             })}
-   
-             <button type="submit" className={styles.submitButton}>
-               LOG IN
-             </button>
-           </form>
-   
-           <p className={styles.loginPrompt}>
-             Don't have an account?{" "}
-             <button
-               type="button"
-               className={styles.loginLink}
-               onClick={() => dispatch(showRegisterForm())}
-             >
-               Create an Account
-             </button>
-           </p>
-         </div>
-       </section>
+    <section className={styles.auth}>
+      {/* ROLE SWITCH BUTTONS */}
+      <div className={styles.roleTabs}>
+        <button
+          className={`${styles.roleTab} ${
+            activeRole === "user" ? styles.activeTab : ""
+          }`}
+          onClick={() => setActiveRole("user")}
+        >
+          <User size={18} />
+          User Login
+        </button>
+
+        <button
+          className={`${styles.roleTab} ${
+            activeRole === "employee" ? styles.activeTab : ""
+          }`}
+          onClick={() => setActiveRole("employee")}
+        >
+          <BadgeCheck size={18} />
+          Employee Login
+        </button>
+      </div>
+
+      <div
+        className={`${styles.container} ${
+          activeRole === "user" ? styles.userMode : styles.employeeMode
+        }`}
+      >
+        {/* LEFT SIDE ICON */}
+        <div className={styles.imageSide}>
+          <div className={styles.bigIcon}>
+            {activeRole === "user" ? (
+              <User size={130} strokeWidth={1} />
+            ) : (
+              <BadgeCheck size={130} strokeWidth={1} />
+            )}
+          </div>
+        </div>
+
+        {/* RIGHT SIDE FORM */}
+        <div className={styles.formSide}>
+          <h2 className={styles.title}>
+            {activeRole === "user" ? "User Login" : "Employee Login"}
+          </h2>
+
+          <form className={styles.form} onSubmit={handleSubmit}>
+            {fields.map((field) => {
+              const Icon = field.icon;
+              return (
+                <label key={field.name} className={styles.field}>
+                  <span className={styles.fieldLabel}>{field.label}</span>
+                  <div className={styles.inputWrapper}>
+                    <Icon className={styles.inputIcon} />
+                    <input
+                      {...field}
+                      value={formData[field.name]}
+                      onChange={handleChange}
+                      className={styles.input}
+                      required
+                    />
+                  </div>
+                </label>
+              );
+            })}
+
+            <button type="submit" className={styles.submitButton}>
+              Log In
+            </button>
+          </form>
+
+          {activeRole === "user" && (
+            <p className={styles.signupText}>
+              Don’t have an account?
+              <Link className={styles.signupLink} to="/signup">
+                Create one
+              </Link>
+            </p>
+          )}
+        </div>
+      </div>
+    </section>
   );
 }
-
-export default LoginForm;

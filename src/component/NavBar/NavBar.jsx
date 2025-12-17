@@ -54,7 +54,8 @@ const Navbar = () => {
         <Link to="/">Home</Link>
         <Link to="">Network</Link>
         <Link to="/about">About</Link>
-        <Link to="/login-register">Login | Sign Up</Link>
+        <Link to="/signin">Sign in</Link>
+        <Link to="/signup">Sign Up</Link>
       </nav>
 
       {/* Hamburger Button (Mobile) */}

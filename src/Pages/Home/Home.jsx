@@ -17,7 +17,7 @@ const Home = () => {
     if (query.length < 2) return setter([]);
 
     const res = await fetch(
-      `http://localhost:8080/api/metro/search?query=${query}`
+      `http://localhost:8080/api/public/metro/search?query=${query}`
     );
     const data = await res.json();
     setter(data);
@@ -30,7 +30,7 @@ const Home = () => {
     if (!from || !to) return;
 
     const res = await fetch(
-      `http://localhost:8080/api/metro/route?from=${from}&to=${to}`
+      `http://localhost:8080/api/public/metro/route?from=${from}&to=${to}`
     );
     const data = await res.json();
     setRoute(data);

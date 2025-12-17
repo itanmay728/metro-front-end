@@ -1,23 +1,31 @@
+/* -----------------------------------------
+   MAIN NAVBAR
+----------------------------------------- */
 .navbar {
   width: 100%;
   height: 70px;
   background-color: #ffffff;
   color: #1f2937;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   padding: 0 3rem;
   border-bottom: 1px solid #e5e7eb;
+
   position: sticky;
   top: 0;
   z-index: 100;
   box-sizing: border-box;
 }
 
+/* Left clickable area */
 .leftLink {
   text-decoration: none;
 }
 
+/* Left side (logo + text) */
 .left {
   display: flex;
   align-items: center;
@@ -33,18 +41,16 @@
   font-size: 1.4rem;
   font-weight: 700;
   letter-spacing: 0.5px;
+  white-space: nowrap;
 }
 
+/* -----------------------------------------
+   DESKTOP NAV LINKS
+----------------------------------------- */
 .navLinks {
   display: flex;
   gap: 2rem;
   align-items: center;
-}
-
-.navLinks :last-child{
- 
-  font-weight: 500;
-  color: red;
 }
 
 .navLinks a {
@@ -55,21 +61,43 @@
   transition: color 0.3s ease;
 }
 
+/* Sign Up button (last child) */
+.navLinks a:last-child {
+  padding: 10px 16px;
+  border-radius: 10px;
+
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #ffffff !important;
+  font-weight: 600;
+
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05);
+}
+
 .navLinks a:hover {
   color: #3b82f6;
 }
 
-/* Hamburger Button (hidden on desktop) */
+.navLinks a:last-child:hover {
+  opacity: 0.8;
+  color: black !important; 
+}
+
+/* -----------------------------------------
+   HAMBURGER BUTTON
+----------------------------------------- */
 .menuBtn {
   display: none;
   background: none;
   border: none;
-  font-size: 1.6rem;
+  font-size: 1.7rem;
   color: #374151;
   cursor: pointer;
 }
 
-/* ---------- Responsive ---------- */
+/* -----------------------------------------
+   MOBILE MENU STYLING
+----------------------------------------- */
 @media (max-width: 900px) {
   .navbar {
     padding: 0 1.5rem;
@@ -84,15 +112,20 @@
     top: 70px;
     right: -100%;
     height: calc(100vh - 70px);
-    width: 70%;
+
+    width: 260px; /* much better size */
     background-color: #ffffff;
+
     flex-direction: column;
-    justify-content: flex-start;
     align-items: flex-start;
-    gap: 1.5rem;
-    padding: 2rem;
-    transition: right 0.3s ease;
-    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    justify-content: flex-start;
+
+    gap: 1.3rem;
+    padding: 2rem 1.5rem;
+
+    transition: right 0.32s ease-in-out;
+    box-shadow: -2px 0 16px rgba(0, 0, 0, 0.08);
+    z-index: 100;
   }
 
   .navLinks.open {
@@ -100,32 +133,79 @@
   }
 
   .navLinks a {
-    font-size: 1.1rem;
     width: 100%;
-    padding: 0.5rem 0;
+    font-size: 1.1rem;
+    padding-bottom: 0.6rem;
     border-bottom: 1px solid #e5e7eb;
   }
 
-  /* Overlay behind menu */
+  /* Proper styled sign-up button on mobile */
+  .navLinks a:last-child {
+    width: 100%;
+    text-align: center;
+    margin-top: 1rem;
+
+    border: none;
+    border-radius: 12px;
+    padding: 0.8rem 0;
+
+    box-shadow: none;
+  }
+
+  /* Mobile overlay */
   .overlay {
     position: fixed;
     inset: 0;
-    /* background: rgba(0, 0, 0, 0.4); */
+    background: rgba(0, 0, 0, 0.35);
     z-index: 90;
   }
 }
 
-/* Extra Small Screens */
+/* -----------------------------------------
+   SMALL MOBILE SCREENS (500px)
+----------------------------------------- */
 @media (max-width: 500px) {
+  .navbar {
+    padding: 0 1rem;
+  }
+
   .title {
-    font-size: 1.2rem;
+    font-size: 1.25rem;
   }
 
   .navLinks {
-    width: 80%;
+    width: 75%;
   }
 
   .navLinks a {
     font-size: 1rem;
+  }
+}
+
+/* -----------------------------------------
+   EXTRA SMALL PHONES (350px - 280px)
+----------------------------------------- */
+@media (max-width: 350px) {
+  .title {
+    font-size: 1.1rem;
+  }
+
+  .logo img {
+    height: 26px;
+  }
+
+  .menuBtn {
+    font-size: 1.4rem;
+  }
+
+  .navLinks {
+    width: 80%;
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 300px) {
+  .title {
+    display: none; /* protect layout on ultra-small phones */
   }
 }

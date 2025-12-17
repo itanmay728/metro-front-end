@@ -1,0 +1,239 @@
+/* container */
+.container {
+  max-width: 1000px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* profile header */
+.profileHeader {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+/* avatar */
+.avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+/* main name/email block */
+.profileMain {
+  display: flex;
+  flex-direction: column;
+}
+
+.name {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.verified {
+  color: #3b82f6;
+  font-size: 14px;
+}
+
+/* small email text */
+.email {
+  margin: 4px 0 0 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+/* top right controls (Edit / Save / Cancel) */
+.topRight {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Buttons */
+.editBtn,
+.saveBtn,
+.cancelBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.editBtn {
+  background: #6a63ff;
+  color: #fff;
+}
+
+.saveBtn {
+  background: #10b981;
+  color: #fff;
+}
+
+.cancelBtn {
+  background: #ef4444;
+  color: #fff;
+}
+
+.btnText {
+  display: inline-block;
+}
+
+.editActions{
+  display: flex;
+  gap: 10px;
+}
+
+/* Card */
+.card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+/* Title */
+.cardTitle {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+/* Row: two-column layout */
+.row {
+  display: grid;
+  grid-template-columns: 200px 1fr; /* label fixed, value flexible */
+  gap: 12px;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px dashed #e6e9ef;
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
+/* Label column */
+.label {
+  color: #6b7280;
+  font-weight: 600;
+}
+
+/* Value column */
+.value {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* plain text value */
+.textValue {
+  color: #111827;
+  font-weight: 600;
+}
+
+/* inputs */
+.input {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+  box-sizing: border-box;
+  background: #fff;
+}
+
+/* textarea */
+.textarea {
+  width: 100%;
+  min-height: 80px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+/* password row (input + eye) */
+.passwordRow {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  width: 100%;
+}
+
+.eyeBtn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #374151;
+}
+
+/* small screens: collapse label/value into rows stacked */
+@media (max-width: 760px) {
+  .profileHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .topRight {
+    margin-left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .label {
+    font-size: 13px;
+  }
+
+  .card {
+    padding: 14px;
+  }
+}
+
+/* tiny phones */
+@media (max-width: 420px) {
+  .avatar {
+    width: 80px;
+    height: 80px;
+  }
+  .name {
+    font-size: 18px;
+  }
+  .row {
+    gap: 6px;
+  }
+  .input,
+  .textarea {
+    font-size: 13px;
+    padding: 8px;
+  }
+}

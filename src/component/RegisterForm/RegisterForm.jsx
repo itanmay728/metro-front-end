@@ -1,56 +1,50 @@
 import React, { useState, useCallback } from "react";
 import styles from "./RegisterForm.module.css";
-import { useDispatch } from "react-redux";
-import { showLoginForm } from "../../contextAPI/authUISlice";
 import { Fingerprint, Home, Lock, Mail, Phone, UserRound } from "lucide-react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
-const API_Base  = import.meta.env.VITE_BACKEND_URL;
-
-const createAccountFields = [
+const fields = [
   {
     label: "Full Name",
-    name: "full_name",
+    name: "fullName",
     type: "text",
     placeholder: "John Doe",
     icon: UserRound,
     autoComplete: "name",
   },
   {
-    label: "Email ID",
-    name: "email_id",
+    label: "Email",
+    name: "emailId",
     type: "email",
-    placeholder: "you@example.com",
+    placeholder: "example@mail.com",
     icon: Mail,
     autoComplete: "email",
   },
   {
-    label: "Mobile Number",
-    name: "phone_number",
+    label: "Phone Number",
+    name: "phoneNumber",
     type: "tel",
-    placeholder: "+91 1234567890",
+    placeholder: "+91 9876543210",
     icon: Phone,
     autoComplete: "tel",
     inputMode: "tel",
-    pattern: "[0-9+ ]{10,15}",
   },
   {
     label: "Address",
     name: "address",
     type: "text",
-    placeholder: "123 Metro Lane, City",
+    placeholder: "Delhi, India",
     icon: Home,
-    autoComplete: "street-address",
   },
   {
     label: "Aadhar Number",
-    name: "aadhar_number",
+    name: "aadharNumber",
     type: "text",
     placeholder: "XXXX XXXX XXXX",
     icon: Fingerprint,
     inputMode: "numeric",
-    pattern: "[0-9 ]{12,14}",
-    maxLength: 14,
+    maxLength: 12,
   },
   {
     label: "Password",
@@ -62,54 +56,55 @@ const createAccountFields = [
   },
 ];
 
-function RegisterForm() {
-  const dispatch = useDispatch();
+export default function RegisterForm() {
 
-  // State for controlled form
   const [formData, setFormData] = useState({
-    full_name: "",
-    email_id: "",
-    phone_number: "",
+    fullName: "",
+    emailId: "",
+    phoneNumber: "",
     address: "",
-    aadhar_number: "",
+    aadharNumber: "",
     password: "",
   });
 
-  // Generic input change handler
-  const handleChange = useCallback((event) => {
-    const { name, value } = event.target;
+  // Input handler
+  const handleChange = useCallback((e) => {
+    const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
   }, []);
 
-  // Handle form submission
+  // Submit handler
   const handleSubmit = useCallback(
-    async (event) => {
-      event.preventDefault();
-      console.log("Form submitted:", formData);
-      // You can dispatch a registration action here instead of console.log
+    async (e) => {
+      e.preventDefault();
+      console.log("Submitting:", formData);
 
       try {
         const response = await axios.post(
-          `${API_Base}/addcustomer`,
+          "http://localhost:8080/api/public/auth/addcustomer",
           formData,
           { headers: { "Content-Type": "application/json" } }
         );
-        console.log("✅ Response from backend:", response.data);
+
+        console.log("SUCCESS:", response.data);
         alert("Account created successfully!");
+
+        
       } catch (error) {
-        console.error("❌ Error during registration:", error);
-        alert("Failed to create account. Please try again");
+        console.error("REGISTRATION ERROR:", error);
+        alert("Failed to register. Check details and try again.");
       }
 
+      // Reset form
       setFormData({
-        full_name: "",
-        email_id: "",
-        phone_number: "",
+        fullName: "",
+        emailId: "",
+        phoneNumber: "",
         address: "",
-        aadhar_number: "",
+        aadharNumber: "",
         password: "",
       });
     },
@@ -118,38 +113,31 @@ function RegisterForm() {
 
   return (
     <section className={styles.auth}>
-      <div className={styles.authCard} aria-labelledby="create-account-heading">
+      <div className={styles.authCard}>
         <header className={styles.authHeader}>
-          <h2 id="create-account-heading" className={styles.authTitle}>
-            Create Account
-          </h2>
-          <p className={styles.authSubtitle}>Let&apos;s get you started!</p>
+          <h2 className={styles.authTitle}>Create Account</h2>
+          <p className={styles.authSubtitle}>Let’s get you started!</p>
         </header>
 
         <form className={styles.form} onSubmit={handleSubmit}>
-          {createAccountFields.map((field) => {
-            const Icon = field.icon;
+          {fields.map((f) => {
+            const Icon = f.icon;
             return (
-              <label
-                key={field.name}
-                className={styles.field}
-                htmlFor={field.name}
-              >
-                <span className={styles.fieldLabel}>{field.label}</span>
+              <label key={f.name} className={styles.field}>
+                <span className={styles.fieldLabel}>{f.label}</span>
+
                 <div className={styles.inputWrapper}>
-                  <Icon className={styles.inputIcon} aria-hidden />
+                  <Icon className={styles.inputIcon} />
                   <input
-                    id={field.name}
-                    name={field.name}
-                    type={field.type}
-                    placeholder={field.placeholder}
-                    autoComplete={field.autoComplete}
-                    inputMode={field.inputMode}
-                    pattern={field.pattern}
-                    maxLength={field.maxLength}
+                    name={f.name}
+                    type={f.type}
+                    placeholder={f.placeholder}
+                    autoComplete={f.autoComplete}
+                    inputMode={f.inputMode}
+                    maxLength={f.maxLength}
                     required
                     className={styles.input}
-                    value={formData[field.name] || ""}
+                    value={formData[f.name]}
                     onChange={handleChange}
                   />
                 </div>
@@ -164,17 +152,11 @@ function RegisterForm() {
 
         <p className={styles.loginPrompt}>
           Already have an account?{" "}
-          <button
-            type="button"
-            className={styles.loginLink}
-            onClick={() => dispatch(showLoginForm())}
-          >
+          <Link className={styles.loginLink} to="/signin">
             Log In
-          </button>
+          </Link>
         </p>
       </div>
     </section>
   );
 }
-
-export default RegisterForm;

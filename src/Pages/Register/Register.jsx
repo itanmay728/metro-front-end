@@ -1,19 +1,11 @@
-import React from "react";
-import styles from "./LoginRegister.module.css";
+import React from 'react'
+
+import styles from "./Register.module.css";
 import RegisterForm from "../../component/RegisterForm/RegisterForm";
-import LoginForm from "../../component/LoginForm/LoginForm";
-import { useSelector } from "react-redux";
 import map from "../../assets/mapMetro.png"
 
-import {TramFront} from "lucide-react";
-
-
-function LoginRegister() {
-  const currentForm = useSelector((state) => state.authUI.currentForm);
-
+const Register = () => {
   return (
-
-    
     <div className={styles.page}>
       <div className={styles.layout}>
 
@@ -32,11 +24,11 @@ function LoginRegister() {
 
         {/* right side */}
 
-        { currentForm === "login" ? <LoginForm/> : <RegisterForm/>}
+         <RegisterForm/>
   
       </div>
     </div>
-  );
+  )
 }
 
-export default LoginRegister;
+export default Register

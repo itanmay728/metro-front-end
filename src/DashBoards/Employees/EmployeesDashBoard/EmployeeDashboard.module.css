@@ -1,0 +1,300 @@
+/* EmployeeDashboard.module.css */
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 8px 6px;
+}
+
+/* ------------------------------
+   Attendance Card (Improved)
+------------------------------ */
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.leftSide {
+  display: flex;
+  flex-direction: column;
+}
+
+.cardTitle {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.cardSubtitle {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.infoIcon {
+  width: 22px;
+  height: 22px;
+  background: var(--card);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: var(--muted);
+  border: 1px solid rgba(0,0,0,0.1);
+}
+
+/* BODY */
+.attendanceBody {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.chartSection {
+  width: 50%;
+}
+
+.summarySection {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Total Days */
+.totalDays {
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.totalNum {
+  font-size: 32px;
+  font-weight: 800;
+  color: #6a63ff;
+}
+
+.totalLabel {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* Legend */
+.legendList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legendDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.legendName {
+  font-weight: 600;
+}
+
+.legendValue {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  .attendanceBody {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .chartSection,
+  .summarySection {
+    width: 100%;
+  }
+
+  .legendItem {
+    justify-content: center;
+  }
+}
+
+
+/* grid layout for cards */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+/* cards */
+.card,
+.cardWide,
+.cardTable {
+  background: var(--card);
+  border-radius: 12px;
+  padding: 14px;
+  box-shadow: 0 10px 24px rgba(5, 10, 20, 0.04);
+  min-height: 120px;
+}
+
+.cardTable {
+  grid-column: span 3;
+}
+
+
+/* wide card spans two columns */
+.cardWide {
+  grid-column: span 3;
+}
+
+/* table style */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+.table thead th {
+  text-align: left;
+  color: var(--muted);
+  padding: 6px 8px;
+  font-weight: 700;
+}
+.table tbody td {
+  padding: 10px 8px;
+  border-top: 1px solid rgba(0, 0, 0, 0.04);
+  color: var(--text);
+}
+
+/* badges */
+.badgeApproved {
+  background: #e8fff3;
+  color: #019a6b;
+  padding: 6px 8px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+.badgeDecline {
+  background: #fff6f6;
+  color: #e44;
+  padding: 6px 8px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+/* small header row */
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.cardTitle {
+  font-weight: 700;
+  font-size: 14px;
+}
+.cardSmall {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* ===============================
+   CALENDAR CARD
+================================ */
+
+.calendar {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.calendarWeek {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.weekDay {
+  padding-bottom: 4px;
+}
+
+.calendarGrid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+
+.day {
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 13px;
+  border-radius: 8px;
+  cursor: pointer;
+
+  color: var(--text);
+  background: transparent;
+  transition: all .15s ease;
+}
+
+.day:hover {
+  background: rgba(106, 99, 255, 0.12);
+}
+
+.activeDay {
+  background: #6a63ff;
+  color: #fff;
+  font-weight: 700;
+}
+
+
+/* responsive */
+@media (max-width: 1100px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .cardWide {
+    grid-column: span 3;
+  }
+}
+
+@media (max-width: 700px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .cardWide {
+    grid-column: span 1;
+  }
+  .search input {
+    min-width: 80px;
+  }
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}
+
+/* theme neutral variables use layout variables */
+:root {
+  --muted: #6b7280;
+  --card: #ffffff;
+  --text: #071124;
+}
+:root[data-theme="dark"] {
+  --muted: #9fb0c9;
+  --card: #0f1724;
+  --text: #e6eef8;
+}
