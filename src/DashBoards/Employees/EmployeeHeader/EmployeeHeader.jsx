@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 import useEmployeeDetails from "../useEmployeeDetails.jsx";
 
 export default function EmployeeHeader() {
-   const [dateTime, setDateTime] = useState(new Date());
-   const EmployeeData = useEmployeeDetails();
+  const [dateTime, setDateTime] = useState(new Date());
+  const EmployeeData = useEmployeeDetails();
 
   // 🔁 Auto update time every second
   useEffect(() => {
@@ -14,12 +14,23 @@ export default function EmployeeHeader() {
       setDateTime(new Date());
     }, 1000);
 
-    return () => clearInterval(interval); // cleanup
+    return () => clearInterval(interval);
   }, []);
+
+  // 🌞 Dynamic greeting based on time
+  const getGreeting = () => {
+    const hour = dateTime.getHours();
+
+    if (hour < 12) return "Good Morning";
+    if (hour < 17) return "Good Afternoon";
+    if (hour < 21) return "Good Evening";
+    return "Good Night";
+  };
+
   return (
     <header className={styles.header}>
       <div className={styles.brandLeft}>
-        <h2>Good Morning</h2>
+        <h2>{getGreeting()}</h2>
         <h1>{EmployeeData.fullName}</h1>
       </div>
 
@@ -28,8 +39,6 @@ export default function EmployeeHeader() {
         <span>{dateTime.toLocaleString()}</span>
       </div>
 
-
-
       <div className={styles.headerRight}>
         <button className={styles.iconBtn}>
           <FiMessageCircle />
@@ -37,10 +46,11 @@ export default function EmployeeHeader() {
         <button className={styles.iconBtn}>
           <FiBell />
         </button>
+
         <Link to="/employee/dashboard/settings">
-        <div className={styles.avatar}>
-          <img alt="avatar" src={EmployeeData.avatardefault} />
-        </div>
+          <div className={styles.avatar}>
+            <img alt="avatar" src={EmployeeData.avatardefault} />
+          </div>
         </Link>
       </div>
     </header>
